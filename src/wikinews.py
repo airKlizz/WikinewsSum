@@ -117,7 +117,7 @@ class Wikinews:
                     logger.error(f"Cannot read page #{i} - {title}: {e}")
         print(
             "Pages read: {}\nPages returned: {}\nWrong namespace: {}\nNo sources: {}\nNo text: {}\nRedirect: {}".format(
-                i + 1, len(self.docs), wrong_ns, no_sources, no_text, redirect
+                i + 1, len(docs), wrong_ns, no_sources, no_text, redirect
             )
         )
 
