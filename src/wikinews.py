@@ -69,7 +69,7 @@ class Wikinews:
             no_sources = 0
             no_text = 0
             redirect = 0
-            cls.docs = []
+            docs = []
             for i, page_xml in tqdm(enumerate(page_xmls)):
                 elem = cElementTree.fromstring(page_xml)
                 filter_namespaces = ("0",)
