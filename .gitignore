@@ -1,0 +1,6 @@
+__pycache__
+**/__pycache__
+dataset/*
+dumps/*
+sources/*
+wikinews/*
