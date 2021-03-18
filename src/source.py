@@ -17,7 +17,7 @@ class Source:
     def get(self, folder="sources", year=1990, user_agent="getweb agent", timeout=10, retry=False):
         path = Path(folder)
         path.mkdir(parents=True, exist_ok=True)
-        if (path / "urls" / base64.b64encode(self.url.encode(), b"qw").decode("utf-8")[:254]).exists():
+        if (path / "urls" / base64.b64encode(self.url.encode(), b"qw").decode("utf-8")[:254]).exists() and (path / "urls" / base64.b64encode(self.url.encode(), b"qw").decode("utf-8")[:254]).is_file():
             if not retry:
                 return "cached"
             else:
@@ -65,6 +65,30 @@ class Source:
 
 
 class Sources:
+    
+    @staticmethod
+    def success_stats(file, folder="sources"):
+        with open(file) as f:
+            sources = f.read().split("\n")
+
+        stats = {
+            "success": 0,
+            "error": 0,
+            "not_present": 0,
+        }
+        path = Path(folder)
+        for url in sources:
+            url_path = (path / "urls" / base64.b64encode(url.encode(), b"qw").decode("utf-8")[:254])
+            if url_path.exists() and url_path.is_file():
+                with open(url_path) as f:
+                    if f.read() == "error":
+                        stats["error"] += 1
+                    else:
+                        stats["success"] += 1
+            else:
+                stats["not_present"] += 1
+        return stats
+            
     @staticmethod
     def save(file, folder="sources", max_workers=5, timeout=10, retry=False):
         with open(file) as f:

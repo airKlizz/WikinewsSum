@@ -22,8 +22,10 @@ class Content:
             }
             with open(contents_path / filename.name, "w") as f:
                 json.dump(content, f, sort_keys=True, indent=4)
+            return "success"
         except Exception as e:
             print(e)
+            return "error"
             pass
     
     @classmethod
@@ -32,9 +34,12 @@ class Content:
         contents_path = Path(folder) / "contents"
         contents_path.mkdir(parents=True, exist_ok=True)
         files = list(pages_path.glob("*"))
+        success = 0
+        error = 0
+        total = len(files)
         with cf.ThreadPoolExecutor(max_workers=max_workers) as executor:
             futures = []
-            for filename in tqdm(files, desc="Extract content from html"):
+            for filename in files:
                 futures.append(
                     executor.submit(
                         cls.save,
@@ -43,4 +48,11 @@ class Content:
                     )
                 )
             for future in cf.as_completed(futures):
-                future.result()
+                status = future.result()
+                if status == "success":
+                    success += 1
+                elif status == "error":
+                    error += 1
+                else:
+                    raise ValueError("Should not append.")
+                print(f"[{success+error}/{total}]  \tsuccess {success}   \terror {error}")
