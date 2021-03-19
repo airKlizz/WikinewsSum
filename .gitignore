@@ -3,4 +3,5 @@ __pycache__
 dataset/*
 dumps/*
 sources/*
-wikinews/*
+*wikinews/*
+*.zip

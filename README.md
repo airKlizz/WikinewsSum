@@ -45,5 +45,11 @@ Content.extract(folder="sources")
 
 ```python
 from src import Dataset
-Dataset.create(wikinews_folder="enwikinews", sources_folder="sources", dataset_folder="dataset")
+Dataset.create(wikinews_folder="enwikinews", sources_folder="sources", dataset_folder="endataset")
+```
+
+## Step 6: Zip everything
+
+```bash
+zip -r enwikinewssum.zip endataset/ sources/ enwikinews/
 ```
