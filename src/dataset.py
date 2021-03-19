@@ -37,7 +37,7 @@ class Dataset:
                     continue
             doc_with_sources = doc.copy()
             doc_with_sources["sources"] = sources
-            with open(path / (doc_with_sources["title"].replace(" ", "_").lower() + ".json"), "w") as f:
+            with open(path / (doc_with_sources["title"].replace(" ", "_").replace("/", "_").lower() + ".json"), "w") as f:
                 json.dump(doc_with_sources, f, indent=2)
 
         print(f"Number of sources lost {number_of_sources_lost}")
