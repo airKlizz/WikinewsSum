@@ -11,6 +11,9 @@ class Content:
     
     @classmethod
     def save(cls, filename, contents_path):
+        content_path = contents_path / filename.name
+        if content_path.exists() and content_path.is_file():
+            return "cached"
         try:
             with open(filename) as f:
                 html = f.read()
@@ -20,7 +23,7 @@ class Content:
                 "maintext": article.maintext,
                 "language": article.language,
             }
-            with open(contents_path / filename.name, "w") as f:
+            with open(content_path, "w") as f:
                 json.dump(content, f, sort_keys=True, indent=4)
             return "success"
         except Exception as e:
@@ -36,6 +39,7 @@ class Content:
         files = list(pages_path.glob("*"))
         success = 0
         error = 0
+        cached = 0
         total = len(files)
         with cf.ThreadPoolExecutor(max_workers=max_workers) as executor:
             futures = []
@@ -53,6 +57,8 @@ class Content:
                     success += 1
                 elif status == "error":
                     error += 1
+                elif status == "cached":
+                    cached += 1
                 else:
                     raise ValueError("Should not append.")
-                print(f"[{success+error}/{total}]  \tsuccess {success}   \terror {error}")
+                print(f"[{success+error+cached}/{total}]  \tsuccess {success}   \terror {error}   \tcached {cached}")
