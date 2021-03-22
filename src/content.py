@@ -29,10 +29,9 @@ class Content:
         except Exception as e:
             print(e)
             return "error"
-            pass
     
     @classmethod
-    def extract(cls, folder="sources", max_workers=10):
+    def extract(cls, folder="sources", max_workers=30):
         pages_path = Path(folder) / "pages"
         contents_path = Path(folder) / "contents"
         contents_path.mkdir(parents=True, exist_ok=True)
