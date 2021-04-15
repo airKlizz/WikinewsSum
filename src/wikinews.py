@@ -18,9 +18,9 @@ logger = logging.getLogger(__name__)
 
 class Wikinews:
 
-    sources_translations = ["quellen", "sources", "quelle", "source"]
+    sources_translations = ["quellen", "sources", "quelle", "source", "fuentes", "fontes", "fonti", "źródła"]
 
-    category_pattern = re.compile("\[\[(Category|Kategorie|Catégorie):(.*?)\]\]")
+    category_pattern = re.compile("\[\[(Category|Kategorie|Catégorie|Categorías|Categorias|Categorie|Kategorie):(.*?)\]\]")
     footnote_pattern = re.compile(r"==(.+?)==(.+?)\n *\n", flags=re.DOTALL)
     url_pattern = re.compile(r"https?://[^\s|\]]+")
     blank_pattern = re.compile(r"^\s*$")

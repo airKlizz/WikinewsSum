@@ -53,3 +53,19 @@ Dataset.create(wikinews_folder="enwikinews", sources_folder="sources", dataset_f
 ```bash
 zip -r enwikinewssum.zip endataset/ sources/ enwikinews/
 ```
+
+## Step 6 bis: Create one big json file
+
+```python
+import json
+from pathlib import Path
+
+dataset_folder = Path("endataset")
+files = list(dataset_folder.glob("**/*.json"))
+with open("endataset.json", "w") as output_file:
+    for filename in files:
+        with open(filename) as f:
+            entry = json.load(f)
+        output_file.write(json.dumps(entry))
+        output_file.write("\n")
+```
