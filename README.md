@@ -69,3 +69,11 @@ with open("endataset.json", "w") as output_file:
         output_file.write(json.dumps(entry))
         output_file.write("\n")
 ```
+
+## Step 7: Load it using datasets
+
+```python
+from datasets import load_dataset
+
+dataset = load_dataset("json", data_files="endataset.json")
+```

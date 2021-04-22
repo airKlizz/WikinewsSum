@@ -20,7 +20,7 @@ class Wikinews:
 
     sources_translations = ["quellen", "sources", "quelle", "source", "fuentes", "fontes", "fonti", "źródła"]
 
-    category_pattern = re.compile("\[\[(Category|Kategorie|Catégorie|Categorías|Categor\u00eda|Categorias|Categorie|Kategorie):(.*?)\]\]")
+    category_pattern = re.compile("\[\[(Category|Kategorie|Catégorie|Categorías|Categor\u00eda|Categorias|Categoria|Categorie|Kategorie):(.*?)\]\]")
     footnote_pattern = re.compile(r"==(.+?)==(.+?)\n *\n", flags=re.DOTALL)
     url_pattern = re.compile(r"https?://[^\s|\]]+")
     blank_pattern = re.compile(r"^\s*$")
