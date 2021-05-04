@@ -1,0 +1,19 @@
+{
+    "language": "en",
+    "title": "This is the title",
+    "news": "This is the 1st passage of the news.\nThis is the second one.\n...",
+    "sources": [
+        {
+            "language": "en",
+            "text": "This is the raw text from the source",
+            "url": "url of the source",
+            "archive_url": "archive url of the source"
+        },
+        {
+            "language": "en",
+            "text": "This is the raw text from the source",
+            "url": "url of the source",
+            "archive_url": "archive url of the source"
+        }
+    ]
+}

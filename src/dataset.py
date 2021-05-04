@@ -16,6 +16,8 @@ class Dataset:
         content_path = contents_path / base64.b64encode(archive_url.encode(), b"qw").decode("utf-8")[:254]
         with open(content_path) as f:
             source = json.load(f)
+        source["url"] = url
+        source["archive_url"] = archive_url
         return source
 
     @classmethod

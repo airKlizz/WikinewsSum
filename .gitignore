@@ -6,4 +6,4 @@ sources/*
 *wikinews/*
 *.zip
 endataset
-*dataset.json
+*/*dataset.json
