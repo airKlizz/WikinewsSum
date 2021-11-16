@@ -70,6 +70,54 @@ with open("endataset.json", "w") as output_file:
         output_file.write("\n")
 ```
 
+## Step 7: Create the final json file
+
+```python
+import json
+from pathlib import Path
+
+json_filenames = {
+    "de": "datasets/dedataset_with_urls.json",
+    "en": "datasets/endataset_with_urls.json",
+    "es": "datasets/esdataset_with_urls.json",
+    "fr": "datasets/frdataset_with_urls.json",
+    "it": "datasets/itdataset_with_urls.json",
+    "pl": "datasets/pldataset_with_urls.json",
+    "pt": "datasets/ptdataset_with_urls.json",
+}
+
+final_json_filename = "wikinewssum.json"
+
+with open(final_json_filename, "w") as final_json:
+    for language, json_filename in json_filenames.items():
+        with open(json_filename) as json_file:
+            data = json_file.read()
+        for entry_str in data.split("\n"):
+            if entry_str is None or entry_str == "":
+                continue
+            entry = json.loads(entry_str)
+            new_entry = {
+                "language": language,
+                "title": entry["title"],
+                "news": entry["text"],
+                "categories": entry["categories"],
+                "sources": []
+            }
+            for source in entry["sources"]:
+                new_entry["sources"].append({
+                    "language": source["language"],
+                    "title": source["title"],
+                    "text": source["maintext"],
+                    "url": source["url"],
+                    "archive_url": source["archive_url"]
+                })
+            final_json.write(json.dumps(new_entry))
+            final_json.write("\n")
+
+
+
+```
+
 ## Step 7: Load it using datasets
 
 ```python

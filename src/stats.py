@@ -1,21 +1,27 @@
 import numpy as np
+from tqdm import tqdm
+import json
 
 class Stats:
     
-    def __init__(self, dataset):
+    def __init__(self, input_filename):
+        with open(input_filename) as input_f:
+            dataset = [json.loads(entry_str) for entry_str in tqdm(input_f.read().split("\n")) if entry_str is not None and entry_str != ""]  
         self.dataset = dataset
+        self.languages = []
         self.len_text = []
         self.nb_sources = []
         self.len_sources = []
         self.lang_sources = []
         for sample in dataset:
-            self.len_text.append(len(" \n ".join(sample["text"]).split()))
+            self.languages.append(sample["language"])
+            self.len_text.append(len(" \n ".join(sample["news"]).split()))
             self.nb_sources.append(len(sample["sources"]))
             lang = []
             lenghts = []
             for source in sample["sources"]:
                 lang.append(source["language"])
-                lenghts.append(len(source["maintext"].split()))
+                lenghts.append(len(source["text"].split()))
             self.len_sources.append(lenghts)
             self.lang_sources.append(lang)
             
@@ -45,6 +51,16 @@ class Stats:
                 distri[lenght] += 1
             else:
                 distri[lenght] = 1
+        return distri
+    
+    
+    def languages_distribution(self):
+        distri = {}
+        for lg in self.languages:
+            if lg in distri.keys():
+                distri[lg] += 1
+            else:
+                distri[lg] = 1
         return distri
     
     

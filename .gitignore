@@ -1,9 +1,10 @@
 __pycache__
 **/__pycache__
-dataset/*
+datasets/*
 dumps/*
 sources/*
 *wikinews/*
 *.zip
 endataset
 */*dataset.json
+*wikinewssum.json
