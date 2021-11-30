@@ -67,7 +67,7 @@ class Wikinews:
     @classmethod
     def clean_text(cls, text):
         text = re.sub(cls.to_remove_pattern, "", text)
-        text = re.sub(cls.to_remove_pattern_bis, "", text)
+        # text = re.sub(cls.to_remove_pattern_bis, "", text)
         text = re.sub(cls.intern_link_pattern, r"\1", text)
         text = re.sub(cls.intern_link_pattern_bis, r"\1", text)
         text = re.sub(cls.promote_pattern, r"\1", text)
