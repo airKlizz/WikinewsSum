@@ -8,3 +8,6 @@ sources/*
 endataset
 */*dataset.json
 *wikinewssum.json
+.ipynb*
+*ipynb
+.vscode/*

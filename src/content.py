@@ -1,14 +1,12 @@
+import concurrent.futures as cf
 import json
 from pathlib import Path
 
 from newsplease import NewsPlease
 from tqdm import tqdm
-import concurrent.futures as cf
-
 
 
 class Content:
-    
     @classmethod
     def save(cls, filename, contents_path):
         content_path = contents_path / filename.name
@@ -29,7 +27,7 @@ class Content:
         except Exception as e:
             print(e)
             return "error"
-    
+
     @classmethod
     def extract(cls, folder="sources", max_workers=30):
         pages_path = Path(folder) / "pages"

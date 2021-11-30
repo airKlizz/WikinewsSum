@@ -18,17 +18,30 @@ logger = logging.getLogger(__name__)
 
 class Wikinews:
 
-    sources_translations = ["quellen", "sources", "quelle", "source", "fuentes", "fontes", "fonti", "źródła"]
+    sources_translations = [
+        "quellen",
+        "sources",
+        "quelle",
+        "source",
+        "fuentes",
+        "fontes",
+        "fonti",
+        "źródła",
+    ]
 
-    category_pattern = re.compile("\[\[(Category|Kategorie|Catégorie|Categorías|Categor\u00eda|Categorias|Categoria|Categorie|Kategorie|Kategoria):(.*?)\]\]")
+    category_pattern = re.compile(
+        "\[\[(Category|Kategorie|Catégorie|Categorías|Categor\u00eda|Categorias|Categoria|Categorie|Kategorie|Kategoria):(.*?)\]\]"
+    )
     footnote_pattern = re.compile(r"==(.+?)==(.+?)\n *\n", flags=re.DOTALL)
     url_pattern = re.compile(r"https?://[^\s|\]]+")
     blank_pattern = re.compile(r"^\s*$")
     to_remove_pattern = r"\[\[File:[^\]]+\]\]"
     to_remove_pattern_bis = r"{{[^w][^}]+}}"
     intern_link_pattern = r"{{w\|[^|}]+\|(?P<name>[^}]+)}}"
+    intern_link_pattern_bis = r"{{w\|(?P<name>[^}]+)}}"
     promote_pattern = r"\[\[(?P<name>[^\]\|]+)\]\]"
     promote_pattern_bis = r"\[\[[^\]\|]+\|(?P<name>[^\]]+)\]\]"
+    source_link_pattern = r"\[http[\S]* (?P<name>[^\]]+)\]"
 
     @classmethod
     def find_sources(cls, text):
@@ -56,8 +69,13 @@ class Wikinews:
         text = re.sub(cls.to_remove_pattern, "", text)
         text = re.sub(cls.to_remove_pattern_bis, "", text)
         text = re.sub(cls.intern_link_pattern, r"\1", text)
+        text = re.sub(cls.intern_link_pattern_bis, r"\1", text)
         text = re.sub(cls.promote_pattern, r"\1", text)
         text = re.sub(cls.promote_pattern_bis, r"\1", text)
+        text = re.sub(cls.source_link_pattern, r"\1", text)
+        text = re.sub(cls.html_comment_pattern, "", text)
+        text = re.sub(cls.css_pattern, "", text)
+        text = re.sub(cls.begin_pattern, "", text)
         return text
 
     @classmethod

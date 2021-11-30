@@ -1,12 +1,17 @@
-import numpy as np
-from tqdm import tqdm
 import json
 
+import numpy as np
+from tqdm import tqdm
+
+
 class Stats:
-    
     def __init__(self, input_filename):
         with open(input_filename) as input_f:
-            dataset = [json.loads(entry_str) for entry_str in tqdm(input_f.read().split("\n")) if entry_str is not None and entry_str != ""]  
+            dataset = [
+                json.loads(entry_str)
+                for entry_str in tqdm(input_f.read().split("\n"))
+                if entry_str is not None and entry_str != ""
+            ]
         self.dataset = dataset
         self.languages = []
         self.len_text = []
@@ -24,13 +29,13 @@ class Stats:
                 lenghts.append(len(source["text"].split()))
             self.len_sources.append(lenghts)
             self.lang_sources.append(lang)
-            
+
     def number_of_samples(self):
         return len(self.dataset)
-    
+
     def number_of_sources(self):
         return self.describe_list(self.nb_sources)
-    
+
     def number_of_sources_distribution(self):
         distri = {}
         for nb in self.nb_sources:
@@ -39,21 +44,20 @@ class Stats:
             else:
                 distri[nb] = 1
         return distri
-    
+
     def len_of_samples(self):
         return self.describe_list(self.len_text)
-    
+
     def len_of_samples_distribution(self):
         distri = {}
         for lenght in self.len_text:
-            lenght = 100 * round(lenght/100)
+            lenght = 100 * round(lenght / 100)
             if lenght in distri.keys():
                 distri[lenght] += 1
             else:
                 distri[lenght] = 1
         return distri
-    
-    
+
     def languages_distribution(self):
         distri = {}
         for lg in self.languages:
@@ -62,8 +66,7 @@ class Stats:
             else:
                 distri[lg] = 1
         return distri
-    
-    
+
     @staticmethod
     def describe_list(l):
         l = np.array(l)
