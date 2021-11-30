@@ -73,9 +73,6 @@ class Wikinews:
         text = re.sub(cls.promote_pattern, r"\1", text)
         text = re.sub(cls.promote_pattern_bis, r"\1", text)
         text = re.sub(cls.source_link_pattern, r"\1", text)
-        text = re.sub(cls.html_comment_pattern, "", text)
-        text = re.sub(cls.css_pattern, "", text)
-        text = re.sub(cls.begin_pattern, "", text)
         return text
 
     @classmethod
@@ -103,6 +100,14 @@ class Wikinews:
                     wrong_ns += 1
                     continue
                 try:
+                    if (
+                        title == "Une photojournaliste française « assassinée » en Centrafrique"
+                        or title
+                        == "Élection présidentielle française de 2012 : François Hollande dévoile ses 60 engagements"
+                    ):
+                        print(title)
+                        print(text)
+                        print()
                     categories = [c for _, c in cls.category_pattern.findall(text)]
                     sources = cls.find_sources(text)
                     cleaned_text = cls.category_pattern.sub("", text)
