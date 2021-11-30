@@ -112,7 +112,21 @@ class Wikinews:
                     sources = cls.find_sources(text)
                     cleaned_text = cls.category_pattern.sub("", text)
                     cleaned_text = cls.footnote_pattern.sub("", cleaned_text)
+                    if (
+                        title == "Une photojournaliste française « assassinée » en Centrafrique"
+                        or title
+                        == "Élection présidentielle française de 2012 : François Hollande dévoile ses 60 engagements"
+                    ):
+                        print(cleaned_text)
+                        print()
                     cleaned_text = cls.clean_text(cleaned_text)
+                    if (
+                        title == "Une photojournaliste française « assassinée » en Centrafrique"
+                        or title
+                        == "Élection présidentielle française de 2012 : François Hollande dévoile ses 60 engagements"
+                    ):
+                        print(cleaned_text)
+                        print()
                     passages = [
                         passage for passage in cleaned_text.split("\n\n") if cls.blank_pattern.match(passage) == None
                     ]
