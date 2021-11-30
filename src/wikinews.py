@@ -32,7 +32,8 @@ class Wikinews:
     category_pattern = re.compile(
         "\[\[(Category|Kategorie|Catégorie|Categorías|Categor\u00eda|Categorias|Categoria|Categorie|Kategorie|Kategoria):(.*?)\]\]"
     )
-    footnote_pattern = re.compile(r"==(.+?)==(.+?)\n *\n", flags=re.DOTALL)
+    # footnote_pattern = re.compile(r"==(.+?)==(.+?)\n *\n", flags=re.DOTALL)
+    footnote_pattern = re.compile(r"==(.+?)==(.+?)\n\n[^\*]", flags=re.DOTALL)
     url_pattern = re.compile(r"https?://[^\s|\]]+")
     blank_pattern = re.compile(r"^\s*$")
     to_remove_pattern = r"\[\[File:[^\]]+\]\]"
@@ -64,16 +65,16 @@ class Wikinews:
             cleaned_sources.append(source)
         return cleaned_sources
 
-    @classmethod
-    def clean_text(cls, text):
-        text = re.sub(cls.to_remove_pattern, "", text)
-        # text = re.sub(cls.to_remove_pattern_bis, "", text)
-        text = re.sub(cls.intern_link_pattern, r"\1", text)
-        text = re.sub(cls.intern_link_pattern_bis, r"\1", text)
-        text = re.sub(cls.promote_pattern, r"\1", text)
-        text = re.sub(cls.promote_pattern_bis, r"\1", text)
-        text = re.sub(cls.source_link_pattern, r"\1", text)
-        return text
+    # @classmethod
+    # def clean_text(cls, text):
+    #     text = re.sub(cls.to_remove_pattern, "", text)
+    #     text = re.sub(cls.to_remove_pattern_bis, "", text)
+    #     text = re.sub(cls.intern_link_pattern, r"\1", text)
+    #     text = re.sub(cls.intern_link_pattern_bis, r"\1", text)
+    #     text = re.sub(cls.promote_pattern, r"\1", text)
+    #     text = re.sub(cls.promote_pattern_bis, r"\1", text)
+    #     text = re.sub(cls.source_link_pattern, r"\1", text)
+    #     return text
 
     @classmethod
     def get_pages_from_wiki_dump(cls, dump_path, max_doc_count):
