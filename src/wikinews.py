@@ -117,16 +117,10 @@ class Wikinews:
                         or title
                         == "Élection présidentielle française de 2012 : François Hollande dévoile ses 60 engagements"
                     ):
+                        print("CLEANED")
                         print(cleaned_text)
-                        print()
-                    cleaned_text = cls.clean_text(cleaned_text)
-                    if (
-                        title == "Une photojournaliste française « assassinée » en Centrafrique"
-                        or title
-                        == "Élection présidentielle française de 2012 : François Hollande dévoile ses 60 engagements"
-                    ):
-                        print(cleaned_text)
-                        print()
+                        print("SOURCES::", sources)
+                    # cleaned_text = cls.clean_text(cleaned_text)
                     passages = [
                         passage for passage in cleaned_text.split("\n\n") if cls.blank_pattern.match(passage) == None
                     ]
