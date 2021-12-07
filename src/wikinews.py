@@ -33,7 +33,7 @@ class Wikinews:
         "\[\[(Category|Kategorie|Catégorie|Categorías|Categor\u00eda|Categorias|Categoria|Categorie|Kategorie|Kategoria):(.*?)\]\]"
     )
     # footnote_pattern = re.compile(r"==(.+?)==(.+?)\n *\n", flags=re.DOTALL)
-    footnote_pattern = re.compile(r"==(.+?)==(.+?)\n\n[^\*]", flags=re.DOTALL)
+    footnote_pattern = re.compile(r"==?(.+?)==?(.+?)\n\n[^\*]", flags=re.DOTALL)
     url_pattern = re.compile(r"https?://[^\s|\]]+")
     blank_pattern = re.compile(r"^\s*$")
     to_remove_pattern = r"\[\[File:[^\]]+\]\]"
@@ -60,7 +60,11 @@ class Wikinews:
         cleaned_sources = []
         for source in sources:
             parse = urlparse(source)
-            if (parse.path == "" or parse.path == "/") and parse.params == "" and parse.query == "":
+            if (
+                (parse.path == "" or parse.path == "/")
+                and parse.params == ""
+                and parse.query == ""
+            ):
                 continue
             cleaned_sources.append(source)
         return cleaned_sources
@@ -102,7 +106,8 @@ class Wikinews:
                     continue
                 try:
                     if (
-                        title == "Une photojournaliste française « assassinée » en Centrafrique"
+                        title
+                        == "Une photojournaliste française « assassinée » en Centrafrique"
                         or title
                         == "Élection présidentielle française de 2012 : François Hollande dévoile ses 60 engagements"
                     ):
@@ -114,7 +119,8 @@ class Wikinews:
                     cleaned_text = cls.category_pattern.sub("", text)
                     cleaned_text = cls.footnote_pattern.sub("", cleaned_text)
                     if (
-                        title == "Une photojournaliste française « assassinée » en Centrafrique"
+                        title
+                        == "Une photojournaliste française « assassinée » en Centrafrique"
                         or title
                         == "Élection présidentielle française de 2012 : François Hollande dévoile ses 60 engagements"
                     ):
@@ -123,7 +129,9 @@ class Wikinews:
                         print("SOURCES::", sources)
                     # cleaned_text = cls.clean_text(cleaned_text)
                     passages = [
-                        passage for passage in cleaned_text.split("\n\n") if cls.blank_pattern.match(passage) == None
+                        passage
+                        for passage in cleaned_text.split("\n\n")
+                        if cls.blank_pattern.match(passage) == None
                     ]
                     sources = cls.clean_sources(sources)
                     if len(" ".join(passages).split()) == 0:
@@ -157,7 +165,9 @@ class Wikinews:
 
     @classmethod
     def save(cls, dump_path, max_doc_count=0, folder="wikinews"):
-        docs = cls.get_pages_from_wiki_dump(dump_path=dump_path, max_doc_count=max_doc_count)
+        docs = cls.get_pages_from_wiki_dump(
+            dump_path=dump_path, max_doc_count=max_doc_count
+        )
         path = Path(folder)
         path.mkdir(parents=True, exist_ok=True)
         with open(path / "docs.json", "w") as f:
