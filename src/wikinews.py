@@ -46,9 +46,9 @@ class Wikinews:
 
     @classmethod
     def find_sources(cls, text):
-        print("Sources text:", text)
         sources = []
         for footnote in cls.footnote_pattern.findall(text):
+            print("Sources text:", footnote)
             footnote_title = list(footnote)[0].replace(" ", "").lower()
             footnote_content = list(footnote)[1].split("\n*")[1:]
             if footnote_title in cls.sources_translations:
