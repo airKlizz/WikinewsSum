@@ -33,7 +33,7 @@ class Wikinews:
         "\[\[(Category|Kategorie|Catégorie|Categorías|Categor\u00eda|Categorias|Categoria|Categorie|Kategorie|Kategoria):(.*?)\]\]"
     )
     # footnote_pattern = re.compile(r"==(.+?)==(.+?)\n *\n", flags=re.DOTALL)
-    footnote_pattern = re.compile(r"==?(.+?)==?(.+?)\n\n[^\*]", flags=re.DOTALL)
+    footnote_pattern = re.compile(r"==?([^=]*)==?(.+?)\n\n[^\*]", flags=re.DOTALL)
     url_pattern = re.compile(r"https?://[^\s|\]]+")
     blank_pattern = re.compile(r"^\s*$")
     to_remove_pattern = r"\[\[File:[^\]]+\]\]"
@@ -46,6 +46,7 @@ class Wikinews:
 
     @classmethod
     def find_sources(cls, text):
+        print("Sources text:", text)
         sources = []
         for footnote in cls.footnote_pattern.findall(text):
             footnote_title = list(footnote)[0].replace(" ", "").lower()
