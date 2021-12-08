@@ -11,3 +11,5 @@ endataset
 .ipynb*
 *ipynb
 .vscode/*
+dataset/*
+*.json
