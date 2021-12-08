@@ -34,7 +34,7 @@ class Filter:
     def short_or_long_news(cls, dataset, news_min_len=100, news_max_len=5000):
         new_dataset = []
         for entry in tqdm(dataset):
-            news = "\n\n".join([txt.replace("\n", "") for txt in entry["news"]])
+            news = entry["news"]
             if len(news) <= news_max_len and len(news) > news_min_len:
                 entry["news"] = news
                 new_dataset.append(entry)

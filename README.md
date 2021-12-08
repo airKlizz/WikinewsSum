@@ -77,7 +77,7 @@ python -m gensim.scripts.segment_wiki -i -f dumps/enwikinews-latest-pages-meta-c
 ```
 
 ```python
-from utils import Clean
+from src import Clean
 Clean.clean("endataset.json", "dumps/enwikinews-latest.json.gz", "cleaned_endataset.json")
 ```
 
@@ -88,13 +88,13 @@ import json
 from pathlib import Path
 
 json_filenames = {
-    "de": "datasets/dedataset_with_urls.json",
-    "en": "datasets/endataset_with_urls.json",
-    "es": "datasets/esdataset_with_urls.json",
-    "fr": "datasets/frdataset_with_urls.json",
-    "it": "datasets/itdataset_with_urls.json",
-    "pl": "datasets/pldataset_with_urls.json",
-    "pt": "datasets/ptdataset_with_urls.json",
+    "en": "cleaned_endataset.json",
+    # "de": "cleaned_dedataset.json",
+    # "es": "cleaned_esdataset.json",
+    # "fr": "cleaned_frdataset.json",
+    # "it": "cleaned_itdataset.json",
+    # "pl": "cleaned_pldataset.json",
+    # "pt": "cleaned_ptdataset.json",
 }
 
 final_json_filename = "wikinewssum.json"
