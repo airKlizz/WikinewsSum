@@ -7,8 +7,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 from xml.etree import cElementTree
 
-import pandas as pd
-from gensim.corpora.wikicorpus import filter_wiki, get_namespace
+from gensim.corpora.wikicorpus import get_namespace
 from gensim.scripts.segment_wiki import extract_page_xmls
 from smart_open import open
 from tqdm import tqdm
@@ -70,17 +69,6 @@ class Wikinews:
             cleaned_sources.append(source)
         return cleaned_sources
 
-    # @classmethod
-    # def clean_text(cls, text):
-    #     text = re.sub(cls.to_remove_pattern, "", text)
-    #     text = re.sub(cls.to_remove_pattern_bis, "", text)
-    #     text = re.sub(cls.intern_link_pattern, r"\1", text)
-    #     text = re.sub(cls.intern_link_pattern_bis, r"\1", text)
-    #     text = re.sub(cls.promote_pattern, r"\1", text)
-    #     text = re.sub(cls.promote_pattern_bis, r"\1", text)
-    #     text = re.sub(cls.source_link_pattern, r"\1", text)
-    #     return text
-
     @classmethod
     def get_pages_from_wiki_dump(cls, dump_path, max_doc_count):
         with open(dump_path, "rb") as xml_fileobj:
@@ -106,29 +94,10 @@ class Wikinews:
                     wrong_ns += 1
                     continue
                 try:
-                    if (
-                        title
-                        == "Une photojournaliste française « assassinée » en Centrafrique"
-                        or title
-                        == "Élection présidentielle française de 2012 : François Hollande dévoile ses 60 engagements"
-                    ):
-                        print(title)
-                        print(text)
-                        print()
                     categories = [c for _, c in cls.category_pattern.findall(text)]
                     sources = cls.find_sources(text)
                     cleaned_text = cls.category_pattern.sub("", text)
                     cleaned_text = cls.footnote_pattern.sub("", cleaned_text)
-                    if (
-                        title
-                        == "Une photojournaliste française « assassinée » en Centrafrique"
-                        or title
-                        == "Élection présidentielle française de 2012 : François Hollande dévoile ses 60 engagements"
-                    ):
-                        print("CLEANED")
-                        print(cleaned_text)
-                        print("SOURCES::", sources)
-                    # cleaned_text = cls.clean_text(cleaned_text)
                     passages = [
                         passage
                         for passage in cleaned_text.split("\n\n")

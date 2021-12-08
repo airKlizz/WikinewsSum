@@ -48,13 +48,13 @@ from src import Dataset
 Dataset.create(wikinews_folder="enwikinews", sources_folder="sources", dataset_folder="endataset")
 ```
 
-## Step 6: Zip everything
+## (optional) Zip everything
 
 ```bash
 zip -r enwikinewssum.zip endataset/ sources/ enwikinews/
 ```
 
-## Step 6 bis: Create one big json file
+## Step 6: Create one big json file
 
 ```python
 import json
@@ -70,20 +70,31 @@ with open("endataset.json", "w") as output_file:
         output_file.write("\n")
 ```
 
-## Step 7: Create the final json file
+## Step 7: Clean the texts by using another text extraction method (which removed the sources, this is why it was not used in the first place)
+
+```bash
+python -m gensim.scripts.segment_wiki -i -f dumps/enwikinews-latest-pages-meta-current.xml.bz2 -o dumps/enwikinews-latest.json.gz
+```
+
+```python
+from src import Clean
+Clean.clean("endataset.json", "dumps/enwikinews-latest.json.gz", "cleaned_endataset.json")
+```
+
+## Step 8: Create the final json file
 
 ```python
 import json
 from pathlib import Path
 
 json_filenames = {
-    "de": "datasets/dedataset_with_urls.json",
-    "en": "datasets/endataset_with_urls.json",
-    "es": "datasets/esdataset_with_urls.json",
-    "fr": "datasets/frdataset_with_urls.json",
-    "it": "datasets/itdataset_with_urls.json",
-    "pl": "datasets/pldataset_with_urls.json",
-    "pt": "datasets/ptdataset_with_urls.json",
+    "en": "cleaned_endataset.json",
+    # "de": "cleaned_dedataset.json",
+    # "es": "cleaned_esdataset.json",
+    # "fr": "cleaned_frdataset.json",
+    # "it": "cleaned_itdataset.json",
+    # "pl": "cleaned_pldataset.json",
+    # "pt": "cleaned_ptdataset.json",
 }
 
 final_json_filename = "wikinewssum.json"
@@ -118,10 +129,16 @@ with open(final_json_filename, "w") as final_json:
 
 ```
 
+## Step 8: Filter samples
+
+```python
+from src import Filter
+Filter.filter("wikinewssum.json", "filtered_wikinewssum.json")
+```
+
 ## Step 7: Load it using datasets
 
 ```python
 from datasets import load_dataset
-
-dataset = load_dataset("json", data_files="endataset.json")
+dataset = load_dataset("json", data_files="filtered_wikinewssum.json")
 ```
