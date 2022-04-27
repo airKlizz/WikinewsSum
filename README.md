@@ -7,11 +7,11 @@ Code used to create the WikinewsSum dataset presented in **Generating Extended a
 WikinewsSum is based on [Wikinews](https://www.wikinews.org).
 The Wikinews articles are used as summaries and the source texts as input texts for the summaries.
 
-The dataset is ditributed via the European Language Grid: https://live.european-language-grid.eu/catalogue/...
+The dataset is ditributed via the European Language Grid: https://live.european-language-grid.eu/catalogue/corpus/18633
 
 ## Usage
 
-First you need to download the dataset [here](https://live.european-language-grid.eu/catalogue/...).
+First you need to download the dataset [here](https://live.european-language-grid.eu/catalogue/corpus/18633).
 Then you can load the dataset using the [`datasets`](https://github.com/huggingface/datasets) library:
 
 ```python
